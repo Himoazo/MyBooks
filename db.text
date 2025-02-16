@@ -1,0 +1,4 @@
+Author(Author_ID(PK), Author_name)
+Books(Book_ID(PK), Book_name, Book_genre, Author_ID(FK))
+User(User_ID(PK), User_name, Email)
+Borrowing(Borrow_ID(PK), status, borrow_date, due_date, return_date, User_ID(FK), Book_ID(FK))
