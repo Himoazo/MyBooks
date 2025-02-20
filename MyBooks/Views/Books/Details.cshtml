@@ -4,33 +4,37 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Book</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Book_name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book_name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Genre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Author.AuthorID)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.BookID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="container mt-4">
+    <h1 class="mb-3">Detaljer</h1>
+
+    <div class="card shadow-sm p-4 bg-light">
+        <dl class="row">
+            <dt class="col-sm-3 fw-bold text-primary">
+                @Html.DisplayNameFor(model => model.Book_name)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Book_name)
+            </dd>
+
+            <dt class="col-sm-3 fw-bold text-primary">
+                @Html.DisplayNameFor(model => model.Genre)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Genre)
+            </dd>
+
+            <dt class="col-sm-3 fw-bold text-primary">
+                @Html.DisplayNameFor(model => model.Author)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Author!.Author_Name)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="mt-3 d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model?.BookID" class="btn btn-primary">Redigera</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Tillbaka till boklistan</a>
+    </div>
 </div>

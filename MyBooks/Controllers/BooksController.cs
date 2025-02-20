@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyBooks.Data;
+using MyBooks.Helpers;
 using MyBooks.Models;
 
 namespace MyBooks.Controllers
@@ -19,11 +20,26 @@ namespace MyBooks.Controllers
             _context = context;
         }
 
-        // GET: Books
-        public async Task<IActionResult> Index()
+        // GET: Books & Search book
+        public async Task<IActionResult> Index(string? search)
         {
-            var myBooksDbContext = _context.Books.Include(b => b.Author);
-            return View(await myBooksDbContext.ToListAsync());
+            var books = _context.Books.Include(b => b.Author).AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                var filteredBooks = books.Where(b => 
+                b.Book_name.Contains(search) ||
+                b.Genre.Contains(search) ||
+                b.Author!.Author_Name.Contains(search)
+                );
+                return View(await filteredBooks.ToListAsync());
+            }
+
+            User? LoggedInUser = SessionHelper.LoggedInUser(HttpContext);
+
+            ViewBag.LoggedIn = LoggedInUser != null ? true : false;
+
+            return View(await books.ToListAsync());
         }
 
         // GET: Books/Details/5
@@ -48,19 +64,31 @@ namespace MyBooks.Controllers
         // GET: Books/Create
         public IActionResult Create()
         {
-            ViewData["AuthorID"] = new SelectList(_context.Authors, "AuthorID", "AuthorID");
+            ViewData["AuthorID"] = new SelectList(_context.Authors, "AuthorID", "Author_Name");
             return View();
         }
 
         // POST: Books/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookID,Book_name,Genre,AuthorID")] Book book)
+        public async Task<IActionResult> Create([Bind("Book_name,Genre,AuthorID")] Book book)
         {
+            Console.WriteLine("Hello from Create");
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("Model State is Invalid");
+                foreach (var entry in ModelState)
+                {
+                    foreach (var error in entry.Value.Errors)
+                    {
+                        Console.WriteLine($"Property: {entry.Key}, Error: {error.ErrorMessage}");
+                    }
+                }
+            }
+
             if (ModelState.IsValid)
             {
+                if (!ModelState.IsValid) { Console.WriteLine("Model State is Alright"); }
                 _context.Add(book);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -82,13 +110,11 @@ namespace MyBooks.Controllers
             {
                 return NotFound();
             }
-            ViewData["AuthorID"] = new SelectList(_context.Authors, "AuthorID", "AuthorID", book.AuthorID);
+            ViewData["AuthorID"] = new SelectList(_context.Authors, "AuthorID", "Author_Name", book.AuthorID);
             return View(book);
         }
 
         // POST: Books/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("BookID,Book_name,Genre,AuthorID")] Book book)

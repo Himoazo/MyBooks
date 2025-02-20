@@ -4,51 +4,54 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Borrowing</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BookStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BookStatus)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Borrow_date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Borrow_date)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Return_date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Return_date)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Due_date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Due_date)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.UserID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Book)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book.BookID)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.BorrowingID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="container mt-4">
+    <h1 class="mb-3">Lånedetaljer</h1>
+
+    <div class="card shadow-sm p-4 bg-light">
+        <dl class="row">
+            <dt class="col-sm-3 fw-bold text-primary">
+                @Html.DisplayNameFor(model => model.Borrow_date)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Borrow_date)
+            </dd>
+
+            <dt class="col-sm-3 fw-bold text-primary">
+                @Html.DisplayNameFor(model => model.Return_date)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Return_date)
+            </dd>
+
+            <dt class="col-sm-3 fw-bold text-primary">
+                @Html.DisplayNameFor(model => model.Due_date)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Due_date)
+            </dd>
+
+            <dt class="col-sm-3 fw-bold text-primary">
+                @Html.DisplayNameFor(model => model.User)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.User.User_Name)
+            </dd>
+
+            <dt class="col-sm-3 fw-bold text-primary">
+                @Html.DisplayNameFor(model => model.Book)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Book.Book_name)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="mt-3 d-flex gap-2">
+        @if (@Model?.Return_date == null)
+        {
+            <a asp-action="Borrow" asp-route-id="@Model?.BorrowingID" class="btn btn-primary">Lämna tillbaka</a>
+        }
+        <a asp-action="Index" class="btn btn-outline-secondary">Tillbaka till lånelistan</a>
+    </div>
 </div>

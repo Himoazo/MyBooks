@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBooks.Data;
 
@@ -11,9 +12,11 @@ using MyBooks.Data;
 namespace MyBooks.Migrations
 {
     [DbContext(typeof(MyBooksDbContext))]
-    partial class MyBooksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250217104728_statusBool")]
+    partial class statusBool
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,9 +34,7 @@ namespace MyBooks.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorID"));
 
                     b.Property<string>("Author_Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AuthorID");
 
@@ -51,18 +52,11 @@ namespace MyBooks.Migrations
                     b.Property<int>("AuthorID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Available")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Book_name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Genre")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BookID");
 
@@ -81,6 +75,9 @@ namespace MyBooks.Migrations
 
                     b.Property<int>("BookID")
                         .HasColumnType("int");
+
+                    b.Property<bool>("BookStatus")
+                        .HasColumnType("bit");
 
                     b.Property<DateOnly>("Borrow_date")
                         .HasColumnType("date");
@@ -112,14 +109,10 @@ namespace MyBooks.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"));
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("User_Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserID");
 

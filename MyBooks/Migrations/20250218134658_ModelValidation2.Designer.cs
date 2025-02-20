@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBooks.Data;
 
@@ -11,9 +12,11 @@ using MyBooks.Data;
 namespace MyBooks.Migrations
 {
     [DbContext(typeof(MyBooksDbContext))]
-    partial class MyBooksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250218134658_ModelValidation2")]
+    partial class ModelValidation2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

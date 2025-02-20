@@ -4,38 +4,43 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="container mt-4">
+<h1 class="mb-3">Användarkonton</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+        <a asp-action="Create" class="btn btn-primary">Skapa användarkonto</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User_Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.UserID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UserID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.User_Name)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th class="text-center">Åtgärder</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.User_Name)
+                </td>
+                 <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@item.UserID" class="btn btn-sm text-warning">Redigera</a> |
+                        <a asp-action="Details" asp-route-id="@item.UserID" class="btn btn-sm text-info">Detaljer</a> |
+                        <a asp-action="Delete" asp-route-id="@item.UserID" class="btn btn-sm text-danger">Ta bort</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>

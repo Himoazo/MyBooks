@@ -1,0 +1,48 @@
+﻿
+@model MyBooks.DTOs.LoginDTO
+@{
+	ViewData["Title"] = "Index";
+}
+
+<div class="container mt-5">
+	<div class="text-center">
+		<h1 class="fw-bold">Välkommen, <span class="text-primary">@ViewData["UserName"]</span> till min boksamling</h1>
+		<p class="lead text-muted">
+			I denna boksamlingsapplikation kan du lägga till böcker och författare, låna och lämna tillbaka böcker
+			samt skapa och hantera användarkonton.
+		</p>
+	</div>
+
+	<div class="row justify-content-center mt-4">
+		<div class="col-md-6">
+			<div class="card shadow-lg">
+				<div class="card-body">
+					<h4 class="text-center mb-4">Logga in</h4>
+					<form asp-action="Index" method="post">
+						<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+						<div class="mb-3">
+							<label asp-for="User_Name" class="form-label fw-semibold">Användarnamn</label>
+							<input asp-for="User_Name" class="form-control" placeholder="Ange ditt användarnamn" />
+							<span asp-validation-for="User_Name" class="text-danger"></span>
+						</div>
+
+						<div class="mb-3">
+							<label asp-for="Email" class="form-label fw-semibold">E-post</label>
+							<input asp-for="Email" class="form-control" type="email" placeholder="Ange din e-postadress" />
+							<span asp-validation-for="Email" class="text-danger"></span>
+						</div>
+
+						<div class="d-grid">
+							<button type="submit" class="btn btn-primary"> Logga in</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<p class="text-center mt-3">
+				Om du inte redan har ett konto kan du <a asp-controller="Users" asp-action="Create" class="fw-semibold text-decoration-none">skapa ett här</a>.
+			</p>
+		</div>
+	</div>
+</div>
